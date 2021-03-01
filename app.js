@@ -13,10 +13,16 @@ let snake = [
   { x: 160, y: 200 },
 ];
 
+let dx = 10;
+let dy = 0;
+
 // GAME START
 function main() {
-  clearCanvas();
-  drawSnake();
+  setInterval(function onTick() {
+    clearCanvas();
+    moveSnake();
+    drawSnake();
+  }, 500);
 }
 
 main();
@@ -32,4 +38,10 @@ function drawSnake() {
     ctx.fillStyle = snakeColor;
     ctx.fillRect(snakeSegment.x, snakeSegment.y, 10, 10);
   });
+}
+
+function moveSnake() {
+  const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+  snake.unshift(head);
+  snake.pop();
 }
