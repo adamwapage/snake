@@ -18,12 +18,15 @@ let dy = 0;
 
 // GAME START
 function main() {
-  setInterval(function onTick() {
+  setInterval(() => {
+    if (gameEnded()) return;
     clearCanvas();
     moveSnake();
     drawSnake();
-  }, 500);
+  }, 100);
 }
+
+document.addEventListener('keydown', changeDirection);
 
 main();
 
@@ -44,4 +47,45 @@ function moveSnake() {
   const head = { x: snake[0].x + dx, y: snake[0].y + dy };
   snake.unshift(head);
   snake.pop();
+}
+
+function changeDirection(e) {
+  const goingLeft = dx === -10;
+  const goingUp = dy === -10;
+  const goingRight = dx === 10;
+  const goingDown = dy === 10;
+
+  if (e.keyCode === 37 && !goingRight) {
+    dx = -10;
+    dy = 0;
+  }
+
+  if (e.keyCode === 38 && !goingDown) {
+    dx = 0;
+    dy = -10;
+  }
+
+  if (e.keyCode === 39 && !goingLeft) {
+    dx = 10;
+    dy = 0;
+  }
+
+  if (e.keyCode === 40 && !goingUp) {
+    dx = 0;
+    dy = 10;
+  }
+}
+
+function gameEnded() {
+  for (let i = 4; i < snake.length; i++) {
+    if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
+      return true;
+    }
+  }
+
+  const hitLeftWall = snake[0].x < 0;
+  const hitRightWall = snake[0].x > canvas.width - 10;
+  const hitToptWall = snake[0].y < 0;
+  const hitBottomWall = snake[0].y > canvas.height - 10;
+  return hitLeftWall || hitRightWall || hitToptWall || hitBottomWall;
 }
