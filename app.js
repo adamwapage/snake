@@ -20,16 +20,20 @@ let dy = 0;
 let foodX;
 let foodY;
 let gameScore = 0;
+// let gameEnded = false;
 
 // GAME START
 function main() {
   setInterval(() => {
-    if (gameEnded()) return;
+    if (gameEnded()) {
+      modal.style.display = 'block';
+      return;
+    }
     clearCanvas();
     drawFood();
     moveSnake();
     drawSnake();
-  }, 100);
+  }, 80);
 }
 
 document.addEventListener('keydown', changeDirection);
@@ -122,3 +126,12 @@ function genFood() {
     if (hasEaten) genFood();
   });
 }
+
+// Get the modal
+var modal = document.getElementById('myModal');
+
+const restart = document.querySelector('#restart');
+restart.addEventListener('click', () => {
+  console.log('start again');
+  main();
+});
