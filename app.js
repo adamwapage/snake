@@ -1,5 +1,6 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+const score = document.getElementById('score');
 
 // Colors
 const boardColor = '#222';
@@ -18,6 +19,7 @@ let dy = 0;
 
 let foodX;
 let foodY;
+let gameScore = 0;
 
 // GAME START
 function main() {
@@ -59,6 +61,8 @@ function moveSnake() {
   snake.unshift(head);
   const eatenFood = snake[0].x === foodX && snake[0].y === foodY;
   if (eatenFood) {
+    gameScore++;
+    score.innerHTML = gameScore;
     genFood();
   } else {
     snake.pop();
@@ -107,7 +111,7 @@ function gameEnded() {
 }
 
 function randomFood(min, max) {
-  return Math.round((Math.random() * (max-min) + min) / 10) * 10;
+  return Math.floor((Math.random() * canvas.width) / 10) * 10;
 }
 
 function genFood() {
