@@ -38,7 +38,7 @@ genFood();
 
 function clearCanvas() {
   ctx.fillStyle = boardColor;
-  ctx.fillRect(10, 10, canvas.width, canvas.height);
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 function drawSnake() {
@@ -57,7 +57,12 @@ function drawFood() {
 function moveSnake() {
   const head = { x: snake[0].x + dx, y: snake[0].y + dy };
   snake.unshift(head);
-  snake.pop();
+  const eatenFood = snake[0].x === foodX && snake[0].y === foodY;
+  if (eatenFood) {
+    genFood();
+  } else {
+    snake.pop();
+  }
 }
 
 function changeDirection(e) {
@@ -102,14 +107,14 @@ function gameEnded() {
 }
 
 function randomFood(min, max) {
-  return Math.round((Math.random() * (max - min) + min) / 10) * 10;
+  return Math.round((Math.random() * (max-min) + min) / 10) * 10;
 }
 
 function genFood() {
-  foodX = randomFood(0, canvas.width - 10);
-  foodY = randomFood(0, canvas.height - 10);
-  snake.forEach(seg => {
-    const hasEaten = seg.x == foodX && seg.y == foodY;
+  foodX = randomFood(0, canvas.width);
+  foodY = randomFood(0, canvas.width);
+  snake.forEach(snakeSegment => {
+    const hasEaten = snakeSegment.x == foodX && snakeSegment.y == foodY;
     if (hasEaten) genFood();
   });
 }
