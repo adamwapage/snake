@@ -16,11 +16,15 @@ let snake = [
 let dx = 10;
 let dy = 0;
 
+let foodX;
+let foodY;
+
 // GAME START
 function main() {
   setInterval(() => {
     if (gameEnded()) return;
     clearCanvas();
+    drawFood();
     moveSnake();
     drawSnake();
   }, 100);
@@ -29,6 +33,8 @@ function main() {
 document.addEventListener('keydown', changeDirection);
 
 main();
+
+genFood();
 
 function clearCanvas() {
   ctx.fillStyle = boardColor;
@@ -41,6 +47,11 @@ function drawSnake() {
     ctx.fillStyle = snakeColor;
     ctx.fillRect(snakeSegment.x, snakeSegment.y, 10, 10);
   });
+}
+
+function drawFood() {
+  ctx.fillStyle = 'lightgreen';
+  ctx.fillRect(foodX, foodY, 10, 10);
 }
 
 function moveSnake() {
@@ -88,4 +99,17 @@ function gameEnded() {
   const hitToptWall = snake[0].y < 0;
   const hitBottomWall = snake[0].y > canvas.height - 10;
   return hitLeftWall || hitRightWall || hitToptWall || hitBottomWall;
+}
+
+function randomFood(min, max) {
+  return Math.round((Math.random() * (max - min) + min) / 10) * 10;
+}
+
+function genFood() {
+  foodX = randomFood(0, canvas.width - 10);
+  foodY = randomFood(0, canvas.height - 10);
+  snake.forEach(seg => {
+    const hasEaten = seg.x == foodX && seg.y == foodY;
+    if (hasEaten) genFood();
+  });
 }
