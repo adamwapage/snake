@@ -2,6 +2,10 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const score = document.getElementById('score');
 
+// Function Calls
+document.addEventListener('keydown', changeDirection);
+main();
+
 // Colors
 const boardColor = '#222';
 const snakeColor = '#F2F2F2';
@@ -20,12 +24,12 @@ let dy = 0;
 let foodX;
 let foodY;
 let gameScore = 0;
-// let gameEnded = false;
+let gameOver = false;
 
 // GAME START
 function main() {
-  setInterval(() => {
-    if (gameEnded()) {
+  setInterval(function tick() {
+    if (gameOver) {
       modal.style.display = 'block';
       return;
     }
@@ -33,14 +37,9 @@ function main() {
     drawFood();
     moveSnake();
     drawSnake();
+    gameEnded();
   }, 80);
 }
-
-document.addEventListener('keydown', changeDirection);
-
-main();
-
-genFood();
 
 function clearCanvas() {
   ctx.fillStyle = boardColor;
@@ -49,7 +48,6 @@ function clearCanvas() {
 
 function drawSnake() {
   snake.forEach(snakeSegment => {
-    console.log(snakeSegment);
     ctx.fillStyle = snakeColor;
     ctx.fillRect(snakeSegment.x, snakeSegment.y, 10, 10);
   });
@@ -60,6 +58,7 @@ function drawFood() {
   ctx.fillRect(foodX, foodY, 10, 10);
 }
 
+genFood();
 function moveSnake() {
   const head = { x: snake[0].x + dx, y: snake[0].y + dy };
   snake.unshift(head);
@@ -103,7 +102,7 @@ function changeDirection(e) {
 function gameEnded() {
   for (let i = 4; i < snake.length; i++) {
     if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
-      return true;
+      gameOver = true;
     }
   }
 
@@ -111,7 +110,9 @@ function gameEnded() {
   const hitRightWall = snake[0].x > canvas.width - 10;
   const hitToptWall = snake[0].y < 0;
   const hitBottomWall = snake[0].y > canvas.height - 10;
-  return hitLeftWall || hitRightWall || hitToptWall || hitBottomWall;
+  if (hitLeftWall || hitRightWall || hitToptWall || hitBottomWall) {
+    gameOver = true;
+  }
 }
 
 function randomFood(min, max) {
@@ -127,11 +128,24 @@ function genFood() {
   });
 }
 
-// Get the modal
 var modal = document.getElementById('myModal');
 
-const restart = document.querySelector('#restart');
-restart.addEventListener('click', () => {
-  console.log('start again');
-  main();
-});
+const restartButton = document.querySelector('#restart');
+restartButton.addEventListener('click', restart);
+
+// RESTART
+function restart() {
+  snake = [
+    { x: 200, y: 200 },
+    { x: 190, y: 200 },
+    { x: 180, y: 200 },
+    { x: 170, y: 200 },
+    { x: 160, y: 200 },
+  ];
+
+  dx = 10;
+  dy = 0;
+  
+  gameOver = false;
+  modal.style.display = 'none';
+}
