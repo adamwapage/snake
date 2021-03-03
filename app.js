@@ -145,7 +145,9 @@ function restart() {
 
   dx = 10;
   dy = 0;
-  
+
   gameOver = false;
+  gameScore = 0;
+  score.innerHTML = gameScore;
   modal.style.display = 'none';
 }
