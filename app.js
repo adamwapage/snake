@@ -28,9 +28,15 @@ let gameOver = false;
 
 // GAME START
 function main() {
-  setInterval(function tick() {
+  setInterval(() => {
     if (gameOver) {
       modal.style.display = 'block';
+      const message = document.querySelector('#message');
+      if (gameScore <= 5) {
+        message.innerHTML = 'Not great...';
+      } else if (gameScore >= 6 && gameScore <= 10) {
+        message.innerHTML = 'Getting better!';
+      }
       return;
     }
     clearCanvas();
@@ -149,5 +155,6 @@ function restart() {
   gameOver = false;
   gameScore = 0;
   score.innerHTML = gameScore;
+
   modal.style.display = 'none';
 }
