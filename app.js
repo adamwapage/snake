@@ -2,15 +2,20 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const score = document.getElementById('score');
-
-// Function Calls
-document.addEventListener('keydown', changeDirection);
-main();
+const modal = document.getElementById('myModal');
+const restartButton = document.querySelector('#restart');
+const message = document.querySelector('#message');
+const finalScore = document.querySelector('#finalScore');
 
 // Colors
 const boardColor = '#222';
 const snakeColor = '#F2F2F2';
 
+// Event Listeners
+document.addEventListener('keydown', changeDirection);
+restartButton.addEventListener('click', restart);
+
+// Global Init
 let snake = [
   { x: 200, y: 200 },
   { x: 190, y: 200 },
@@ -19,21 +24,22 @@ let snake = [
   { x: 160, y: 200 },
 ];
 
-let dx = 10;
-let dy = 0;
+let xSpeed = 10;
+let ySpeed = 0;
 
 let foodX;
 let foodY;
 let gameScore = 0;
 let gameOver = false;
 
-// GAME START
+// Game Refresh Rate (Difficulty)
+let refreshSpeed = 80;
+
+// Main
 function main() {
   setInterval(() => {
     if (gameOver) {
       modal.style.display = 'block';
-      const message = document.querySelector('#message');
-      const finalScore = document.querySelector('#finalScore');
       if (gameScore <= 5) {
         message.innerHTML = 'Not great...';
       } else if (gameScore >= 6 && gameScore <= 10) {
@@ -49,7 +55,7 @@ function main() {
     moveSnake();
     drawSnake();
     gameEnded();
-  }, 80);
+  }, refreshSpeed);
 }
 
 function clearCanvas() {
@@ -69,10 +75,10 @@ function drawFood() {
   ctx.fillRect(foodX, foodY, 10, 10);
 }
 
-genFood();
 function moveSnake() {
-  const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+  const head = { x: snake[0].x + xSpeed, y: snake[0].y + ySpeed };
   snake.unshift(head);
+
   const eatenFood = snake[0].x === foodX && snake[0].y === foodY;
   if (eatenFood) {
     gameScore++;
@@ -84,29 +90,29 @@ function moveSnake() {
 }
 
 function changeDirection(e) {
-  const goingLeft = dx === -10;
-  const goingUp = dy === -10;
-  const goingRight = dx === 10;
-  const goingDown = dy === 10;
+  const goingLeft = xSpeed === -10;
+  const goingUp = ySpeed === -10;
+  const goingRight = xSpeed === 10;
+  const goingDown = ySpeed === 10;
 
   if (e.keyCode === 37 && !goingRight) {
-    dx = -10;
-    dy = 0;
+    xSpeed = -10;
+    ySpeed = 0;
   }
 
   if (e.keyCode === 38 && !goingDown) {
-    dx = 0;
-    dy = -10;
+    xSpeed = 0;
+    ySpeed = -10;
   }
 
   if (e.keyCode === 39 && !goingLeft) {
-    dx = 10;
-    dy = 0;
+    xSpeed = 10;
+    ySpeed = 0;
   }
 
   if (e.keyCode === 40 && !goingUp) {
-    dx = 0;
-    dy = 10;
+    xSpeed = 0;
+    ySpeed = 10;
   }
 }
 
@@ -119,9 +125,9 @@ function gameEnded() {
 
   const hitLeftWall = snake[0].x < 0;
   const hitRightWall = snake[0].x > canvas.width - 10;
-  const hitToptWall = snake[0].y < 0;
+  const hitTopWall = snake[0].y < 0;
   const hitBottomWall = snake[0].y > canvas.height - 10;
-  if (hitLeftWall || hitRightWall || hitToptWall || hitBottomWall) {
+  if (hitLeftWall || hitRightWall || hitTopWall || hitBottomWall) {
     gameOver = true;
   }
 }
@@ -134,15 +140,10 @@ function genFood() {
   foodX = randomFood(0, canvas.width);
   foodY = randomFood(0, canvas.width);
   snake.forEach(snakeSegment => {
-    const hasEaten = snakeSegment.x == foodX && snakeSegment.y == foodY;
+    const hasEaten = snakeSegment.x === foodX && snakeSegment.y === foodY;
     if (hasEaten) genFood();
   });
 }
-
-var modal = document.getElementById('myModal');
-
-const restartButton = document.querySelector('#restart');
-restartButton.addEventListener('click', restart);
 
 // RESTART
 function restart() {
@@ -154,12 +155,16 @@ function restart() {
     { x: 160, y: 200 },
   ];
 
-  dx = 10;
-  dy = 0;
+  xSpeed = 10;
+  ySpeed = 0;
 
   gameOver = false;
   gameScore = 0;
   score.innerHTML = gameScore;
-
+  genFood();
   modal.style.display = 'none';
 }
+
+// Function Calls
+genFood();
+main();
