@@ -6,14 +6,13 @@ const modal = document.getElementById('myModal');
 const restartButton = document.querySelector('#restart');
 const message = document.querySelector('#message');
 const finalScore = document.querySelector('#finalScore');
+const easy = document.querySelector('#easy');
+const medium = document.querySelector('#medium');
+const hard = document.querySelector('#hard');
 
 // Colors
 const boardColor = '#222';
 const snakeColor = '#F2F2F2';
-
-// Event Listeners
-document.addEventListener('keydown', changeDirection);
-restartButton.addEventListener('click', restart);
 
 // Global Init
 let snake = [
@@ -34,6 +33,13 @@ let gameOver = false;
 
 // Game Refresh Rate (Difficulty)
 let refreshSpeed = 80;
+
+// Event Listeners
+document.addEventListener('keydown', changeDirection);
+restartButton.addEventListener('click', restart);
+// easy.addEventListener('click', () => {
+//   refreshSpeed = 300;
+// });
 
 // Main
 function main() {

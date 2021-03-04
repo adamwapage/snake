@@ -5,25 +5,29 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Roboto&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <title>Snake</title>
 </head>
 
 <body>
-
-  <!-- Modal -->
   <div id="myModal" class="modal">
     <div class="modal-content">
-
       <p>You died...</p>
       <span id="message"></span>
       <span id="finalScore"></span>
       <button id="restart">Play again?</button>
-
+      <!-- <div class="buttons">
+        <button id="easy">Easy</button>
+        <button id="medium">Medium</button>
+        <button id="hard">God</button>
+      </div> -->
     </div>
   </div>
 
   <div class="container">
+    <h1>snake</h1>
     <span id="score">0</span>
     <canvas id="canvas" width="400" height="400"></canvas>
   </div>

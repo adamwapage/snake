@@ -1,42 +1,39 @@
+/* font-family: 'DotGothic16', sans-serif;
+font-family: 'Roboto', sans-serif; */
+
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background: #ccc;
+  font-family: 'DotGothic16', sans-serif;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+button {
+  font-family: 'DotGothic16', sans-serif;
+  font-size: 15px;
+  margin: 10px;
+  min-width: 100px;
 }
 
-#score {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  margin-bottom: 10px;
-  font-size: 2rem;
+h1 {
+  margin: 35px 0 10px;
 }
 
 .modal {
-  display: none; 
-  position: fixed; 
-  z-index: 1; 
-  padding-top: 100px; /* Location of the box */
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-/* Modal Content */
 .modal-content {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 20px;
   border-radius: 4px;
   background-color: #fefefe;
@@ -50,22 +47,18 @@ body {
   align-items: center;
 }
 
-button {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 15px;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* The Close Button */
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+#score {
+  margin-bottom: 10px;
+  font-size: 2rem;
 }
 
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
+#finalScore {
+  margin: 15px 0 10px;
+  font-size: 2rem;
 }
