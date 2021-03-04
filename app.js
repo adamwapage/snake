@@ -32,11 +32,15 @@ function main() {
     if (gameOver) {
       modal.style.display = 'block';
       const message = document.querySelector('#message');
+      const finalScore = document.querySelector('#finalScore');
       if (gameScore <= 5) {
         message.innerHTML = 'Not great...';
       } else if (gameScore >= 6 && gameScore <= 10) {
         message.innerHTML = 'Getting better!';
+      } else {
+        message.innerHTML = 'Excellent!';
       }
+      finalScore.innerHTML = gameScore;
       return;
     }
     clearCanvas();
