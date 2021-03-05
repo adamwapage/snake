@@ -30,16 +30,14 @@ let foodX;
 let foodY;
 let gameScore = 0;
 let gameOver = false;
-
-// Game Refresh Rate (Difficulty)
-let refreshSpeed = 80;
+let diff = 80;
 
 // Event Listeners
 document.addEventListener('keydown', changeDirection);
 restartButton.addEventListener('click', restart);
-// easy.addEventListener('click', () => {
-//   refreshSpeed = 300;
-// });
+easy.addEventListener('click', () => {
+  
+});
 
 // Main
 function main() {
@@ -61,7 +59,7 @@ function main() {
     moveSnake();
     drawSnake();
     gameEnded();
-  }, refreshSpeed);
+  }, diff);
 }
 
 function clearCanvas() {
@@ -169,6 +167,7 @@ function restart() {
   score.innerHTML = gameScore;
   genFood();
   modal.style.display = 'none';
+  
 }
 
 // Function Calls
