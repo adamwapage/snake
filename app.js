@@ -6,9 +6,6 @@ const modal = document.getElementById('myModal');
 const restartButton = document.querySelector('#restart');
 const message = document.querySelector('#message');
 const finalScore = document.querySelector('#finalScore');
-const easy = document.querySelector('#easy');
-const medium = document.querySelector('#medium');
-const hard = document.querySelector('#hard');
 
 // Colors
 const boardColor = '#222';
@@ -30,22 +27,18 @@ let foodX;
 let foodY;
 let gameScore = 0;
 let gameOver = false;
-let diff = 80;
 
 // Event Listeners
 document.addEventListener('keydown', changeDirection);
 restartButton.addEventListener('click', restart);
-easy.addEventListener('click', () => {
-  
-});
 
 // Main
-function main() {
+function main(diff) {
   setInterval(() => {
     if (gameOver) {
       modal.style.display = 'block';
       if (gameScore <= 5) {
-        message.innerHTML = 'Not great...';
+        message.innerHTML = 'Not great ...';
       } else if (gameScore >= 6 && gameScore <= 10) {
         message.innerHTML = 'Getting better!';
       } else {
@@ -59,7 +52,7 @@ function main() {
     moveSnake();
     drawSnake();
     gameEnded();
-  }, diff);
+  }, 80);
 }
 
 function clearCanvas() {
@@ -167,7 +160,6 @@ function restart() {
   score.innerHTML = gameScore;
   genFood();
   modal.style.display = 'none';
-  
 }
 
 // Function Calls
